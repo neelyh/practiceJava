@@ -1,7 +1,5 @@
 package com.example.demo.entities;
 
-import com.example.demo.entities.iSale;
-
 import javax.persistence.*;
 import java.util.Set;
 
