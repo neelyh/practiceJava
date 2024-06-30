@@ -39,14 +39,13 @@ class SalesServiceTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-    // is the above section correctS
 
     @Test
     public void testFindById_SaleExists() {
         // Arrange
         iSale sale = new iSale(); // Assuming iSale is an interface, you'll need a concrete implementation or mock
                                   // it
-        sale.setId(1L); // Ensure iSale has a setId method
+        sale.setId(1L);
         when(salesRepository.findById(1L)).thenReturn(Optional.of(sale));
 
         // Act
