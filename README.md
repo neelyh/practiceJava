@@ -43,4 +43,36 @@ and use the following to login to the console:
 - Gradle version needed updated and then mapping the same column twice in `iSale.java`
 
 ## Adding sales creation
--
+- Added the endpoint
+- Checked if any info was missing and if it existed in the db
+- Wanted to return useful errors so created some that would throw a useful response
+- Added a test for sale already existing
+
+## Endpoint to fetch sales for a salesperson
+- Create some sales first
+- Test by sending a GET request to:
+- `http://localhost:8080/api/salesForSalesperson?salespersonId=2`
+- To filter send request to
+- `http://localhost:8080/api/salesForSalesperson?salespersonId=2&customerId=1`
+
+## Performance issues
+- I query for the customer and salesperson when linking them to a sale, not good as it can lead to N+1 query problem. I'm unfamiliar with persistence and hibernate and stuck for time, so this was the workaround to get the functionality working! Going forward, maybe there's some better cascade settings, or I could write a better query or even fetching the data in bulk etc should the application continue to scale.
+- Enabling caching is also a good one for the api call that gathers all the sales by a sales person
+
+## Considerations when deleting customers/salesperson
+- First off I'm not a big fan of hard deletion in the db because human error is a thing, however there's always ways to minimise that by writing scripts
+- When deleting entities its important to consider dependencies as we run the risk of orphaning records, so we would need to delete associated sales
+- Maybe we decide to only allow deletion if no sales are associated to a customer etc
+- How the deletion could affect other parts of the application, eg front end etc, is there defaults set up on the front end
+- Take a log of whats been deleted with key fields, enable audit trails on the DB
+
+## Authentication Model
+- Since it's just an API right now, anyone could send a request to it. Keeping it super simple by adding an authorisation header (API key)
+- I can see that spring has security out the box (`org.springframework.security.authentication`) so that makes things easier!
+- Also of course adding dedicated users and passwords for the H2 console
+- You could also put the API behind a gateway
+
+## Suggestions for improving the application
+- Currently the application is using HTTP, really it should use HTTPS for security purposes.
+- Also of course its important to implement some authentication
+- Useful error handling throughout the application with correct HTTP codes being returned when it comes to API's.

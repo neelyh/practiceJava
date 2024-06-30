@@ -1,22 +1,21 @@
 package com.example.demo.entities;
 
-import com.example.demo.repositories.SalesRepository;
 import javax.persistence.*;
 
-@javax.persistence.Entity
+@Entity
 public class iSale {
-    @Autowired
-    SalesRepository salesRepository;
+    // @Autowired shouldn't have dependency
+    // SalesRepository salesRepository;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
+    // encapsulation reasons I've changed these to private
+    private String item = "";
+    private Double amount;
 
-    public String item = "";
-    public Double amount;
-
-    @ManyToOne
-    // this was wrong - mapping to same thing twice
+    // this was wrong originally - mapping to same thing twice
+    @ManyToOne    
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
@@ -32,7 +31,35 @@ public class iSale {
         return this.id;
     }
 
-    public void saveAll(List<iSale> sales){
-        salesRepository.saveAll(sales);
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Salesperson getSalesperson() {
+        return salesperson;
+    }
+
+    public void setSalesperson(Salesperson salesperson) {
+        this.salesperson = salesperson;
     }
 }
