@@ -62,6 +62,7 @@ public class SalesService {
                 throw new SaleAlreadyExistsException("Sale already exists.");
             }
 
+            //TODO: FIX PERFORMANCE, more detailed in README
             // Due to having trouble with unwanted persistence operations I need to get the "linked" entities if I don't want to create new ones
             // To stick to the exercise I won't be creating new customers/salespeople
             Optional<Customer> customer = customerRepository.findById(sale.getCustomer().getId());
